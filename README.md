@@ -9,6 +9,9 @@
 ![KakaoTalk_20230922_135435240](https://github.com/game-addicted-man/2023KWUOSS7/assets/107955161/6b5c6c12-f346-46f6-ac05-90d049ae7000)
 
 ### 필요 라이브러리
-pip install deepface\n
-pip install opencv\n
-pip install matplotlib\n
+pip install deepface
+
+pip install opencv
+
+pip install matplotlib
+
