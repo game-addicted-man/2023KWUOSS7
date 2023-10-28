@@ -1,0 +1,94 @@
+from deepface import DeepFace
+import matplotlib.pyplot as plt
+import cv2
+
+class faceDetect:
+    def __init__(self):
+        self.models = ["VGG-Face",
+                       "Facenet",
+                       "Facenet512",
+                       "OpenFace",
+                       "DeepFace",
+                       "DeepID",
+                       "ArcFace",
+                       "Dlib",
+                       "SFace", ]
+
+        self.database = "/Users/choejm/image"
+
+
+
+
+    def match_face(self, img1, img2=None, name=None):
+        # precondition : img1에는 현재 사진데이터(or 경로), img2에는 민증사진데이터(or 경로), name에는 이름을 할당
+        #                민증 사진을 주기 전에 생년월일로 성인인지 판별 후 성인일때만 함수 이용해야 한다.
+        # postcondition: 민증 사진 없이 현재 사진만 입력하면 데이터베이스에 있는 사진들과 비교,
+        #                두개 사진 모두 입력하면 2개의 사진 비교 일치하면 true 반환
+        try:
+            if isinstance(img1, str):
+                img1 = cv2.imread(img1)
+
+
+
+
+            if img2 == None:
+
+                dfs = DeepFace.find(img_path=img1,
+                                    db_path=self.database, model_name=self.models[2])
+                if len(dfs) > 0:
+                    return True
+
+                return False
+
+            if isinstance(img2, str):
+                img2 = cv2.imread(img2)
+
+            result = DeepFace.verify(img1_path=img1, img2_path=img2, model_name=self.models[2])
+
+            if result["verified"]:
+                cv2.imwrite(self.database +"/"+ name + "_pic" + ".jpg", img1)
+                cv2.imwrite(self.database +"/"+ name + "_ifm" + ".jpg", img2)
+                return True
+
+            return False
+
+        except ValueError as v:
+            # 얼굴 인식이 되지 않을때 예외 처리
+            print(v)
+            return False
+
+    def show_face(self, img):
+        # 이미지의 있는 얼굴들 출력
+        try:
+            faces = DeepFace.extract_faces(img, target_size=(224, 224), detector_backend="opencv")
+            fig, axs = plt.subplots(int(len(faces) / 2 + 1), 2, figsize=(15, 10))
+            axs = axs.flatten()
+
+            for i, face in enumerate(faces):
+                IMG = face["face"]
+                axs[i].imshow(IMG)
+
+            plt.show()
+
+        except ValueError as v:
+            print(v)
+
+    def current_face(self):
+        # 주환이형이 여기서 얼굴인식하고 인식했으면 그 값을 리턴해주세요
+        pass
+
+
+if __name__ == '__main__':
+    # 예제이다.
+    fd = faceDetect()
+    # fd.face_show("/Users/choejm/image/jaemin0.jpg")
+    print(fd.match_face(img1 = "image/MESSI.jpg"))
+    print(fd.match_face("image/jonhun.jpg", "image/jaemin0.jpg", name="일론머스크"))
+
+    # 이런식으로 사용 될 예정
+    # now_img = fd.current_face()
+    # fd.match_face(img1 = now_img, img2 = 민증사진, name = 이름)
+    # 리턴 값이 true 아니면 false이다.
+
+
+
