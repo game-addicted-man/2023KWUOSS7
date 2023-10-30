@@ -15,3 +15,4 @@ pip install opencv
 
 pip install matplotlib
 
+pip install pillow
