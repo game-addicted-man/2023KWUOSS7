@@ -71,7 +71,10 @@ def getBirth(path):
         if(not bool_Name):
             agent_name = checkName(img,path)
             if(len(agent_name)==3):
+                return_value, image = cap.read()
+                cv2.imwrite("opencv.jpg", image)
                 name_List.append(agent_name)
+                
             #같은 이름을 3번 발견하면 이를 정답으로 간주
             for i in name_List:
                 if(name_List.count(i)>=3):
@@ -91,4 +94,8 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 800) # 세로
 getBirth("C:/Program Files/Tesseract-OCR/tesseract.exe")
 cap.release()
 cv2.destroyAllWindows()
+
+image = cv2.imread("card.jpg")
+cropped_img = image[90:310, 420:600]
+cv2.imwrite("face.jpg",cropped_img)
 
