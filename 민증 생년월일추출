@@ -22,10 +22,26 @@ def checkNum(img,path):
     num = re.sub(r'[^0-9]','',text)
     return num
 
+#img: 추출할 사진 ,path: 테서렉트 실행파일 경로
+#주민번호 이름
+def checkName(img,path):
+    pytesseract.pytesseract.tesseract_cmd = path
+
+    plt.figure(figsize=(12, 10))
+    img_crop=img[50:450,100:700]
+    result = img_crop[100:170,50:170]
+    text = pytesseract.image_to_string(result,lang='kor')
+    name = re.sub(r'[^가-힣]','',text)
+    return name
+    
+
 #path: 테서렉트 실행파일 경로
-#웹캠 실행후 주민번호 반환
+#웹캠 실행후 이름과 생년월일 출력
 def getBirth(path):
+    bool_Birth = False
+    bool_Name = False
     birth_List = []
+    name_List = []
     while True:
         ret, frame = cap.read()
         #가로,세로
@@ -36,16 +52,37 @@ def getBirth(path):
         frame_height = int(cap.get(4))
 
 
+        #높이,너비,채널 저장
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        agent_num = checkNum(img,path)
-        if(len(agent_num)==13):
-            birth_List.append(agent_num[:6])
-            # print(agent_num[:6]) 숫자 확인용
+        #생년월일 추출성공 전까지 수행
+        if(not bool_Birth):
+            agent_num = checkNum(img,path)
+            if(len(agent_num)==13):
+                birth_List.append(agent_num[:6])
+                # print(agent_num[:6]) 숫자 확인용
+            #같은 날짜를 3번 발견하면 이를 정답으로 간주
+            for i in birth_List:
+                if(birth_List.count(i)>=3):
+                    print('birth: ', i)
+                    bool_Birth = True
+                    break
+
+        #이름 추출성공 전까지 수행
+        if(not bool_Name):
+            agent_name = checkName(img,path)
+            if(len(agent_name)==3):
+                name_List.append(agent_name)
+            #같은 이름을 3번 발견하면 이를 정답으로 간주
+            for i in name_List:
+                if(name_List.count(i)>=3):
+                    print('name: ', i)
+                    bool_Name = True
+                    break
+        
         if cv2.waitKey(1) == ord('q'):
             break       
-        for i in birth_List:
-            if(birth_List.count(i)>=3):
-                return i
+        if(bool_Name and bool_Birth):
+            break
 
 #실행코드
 cap = cv2.VideoCapture(0)
