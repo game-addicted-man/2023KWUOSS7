@@ -95,6 +95,7 @@ getBirth("C:/Program Files/Tesseract-OCR/tesseract.exe")
 cap.release()
 cv2.destroyAllWindows()
 
+#이름 3번 인식 시 카메라로 사진을 찍어서 주민등록증의 사진 추출 후 face.jpg 파일로 저장
 image = cv2.imread("card.jpg")
 cropped_img = image[90:310, 420:600]
 cv2.imwrite("face.jpg",cropped_img)
