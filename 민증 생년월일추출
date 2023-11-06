@@ -107,10 +107,10 @@ contrast = 2.3
 brightness = 10
 improve2 = cv2.addWeighted(image, contrast, np.zeros(image.shape, image.dtype), 0, brightness) 
 cv2.imwrite('bright_face.jpg', improve2) 
-#sharpening한 것, 제일 쓸만한듯
+#sharpening(선명하게)한 것, 제일 쓸만한듯
 kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]) 
 improve3 = cv2.filter2D(image, -1, kernel) 
 cv2.imwrite('sharpened_face.jpg', improve3) 
 #median blur, 별로?
 improve4 = cv2.medianBlur(image, 11) 
-cv2.imwrite('sharpened_face.jpg', improve4) 
+cv2.imwrite('medianblur_face.jpg', improve4) 
