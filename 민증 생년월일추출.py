@@ -102,8 +102,10 @@ cv2.imwrite("face.jpg",cropped_img)
 #정보의 양을 늘리는 것(즉, 해상도를 늘리는 것)은 불가능하기에 필터링으로 이미지를 선명하게 변환
 improve1 = cv2.detailEnhance(cropped_img, sigma_s=10, sigma_r=0.15)
 cv2.imwrite("improved_face.jpg", improve1)
+
 #sharpening(선명하게)한 것, 제일 쓸만한듯
 kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]) 
 improve3 = cv2.filter2D(cropped_img, -1, kernel) 
 cv2.imwrite('sharpened_face.jpg', improve3) 
+
 
