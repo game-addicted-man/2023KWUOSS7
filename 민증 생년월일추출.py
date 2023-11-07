@@ -72,7 +72,7 @@ def getBirth(path):
             agent_name = checkName(img,path)
             if(len(agent_name)==3):
                 return_value, image = cap.read()
-                cv2.imwrite("opencv.jpg", image)
+                cv2.imwrite("card.jpg", image)
                 name_List.append(agent_name)
                 
             #같은 이름을 3번 발견하면 이를 정답으로 간주
@@ -89,13 +89,21 @@ def getBirth(path):
 
 #실행코드
 cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800) # 가로
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 800) # 세로
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1600) # 가로
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1600) # 세로
 getBirth("C:/Program Files/Tesseract-OCR/tesseract.exe")
 cap.release()
 cv2.destroyAllWindows()
 
+#이름 3번 인식 시 카메라로 사진을 찍어서 주민등록증의 사진 추출 후 face.jpg 파일로 저장
 image = cv2.imread("card.jpg")
 cropped_img = image[90:310, 420:600]
 cv2.imwrite("face.jpg",cropped_img)
+#정보의 양을 늘리는 것(즉, 해상도를 늘리는 것)은 불가능하기에 필터링으로 이미지를 선명하게 변환
+improve1 = cv2.detailEnhance(cropped_img, sigma_s=10, sigma_r=0.15)
+cv2.imwrite("improved_face.jpg", improve1)
+#sharpening(선명하게)한 것, 제일 쓸만한듯
+kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]) 
+improve3 = cv2.filter2D(cropped_img, -1, kernel) 
+cv2.imwrite('sharpened_face.jpg', improve3) 
 
