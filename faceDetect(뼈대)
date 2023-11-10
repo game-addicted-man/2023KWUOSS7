@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from PIL import Image
 import os
+from glob import glob
 
 
 class faceDetect:
@@ -79,7 +80,7 @@ class faceDetect:
         # precondition : "captured.png" 사진 파일이 있어도 되고 없어도 된다. 이 기능의 목적은 사용자의 사진 촬영에 한한다.
         # postcondition: 3초 간의 얼굴 인식 후 촬영되면 "captured.png" 사진 파일이 생성 또는 갱신됨. (현재, 리턴 값은 없음)
 
-        pictureTime = 1  # 사진촬영 대기 시간은 3초.
+        pictureTime = 3  # 사진촬영 대기 시간은 3초.
 
         camera = cv2.VideoCapture(0)  # 실행하는 장치의 카메라를 켜고 640 X 480 의 해상도로 설정한다.
         camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -132,10 +133,10 @@ class faceDetect:
 if __name__ == '__main__':
     # 예제이다.
 
-    mustBeRemovedFile = './image/representations_facenet512.pkl'    # representations_facenet512.pkl 삭제해주어야 함.
+    mustBeRemovedFile = './image/*.pkl'    # image 폴더 내의 *.pkl 확장자 파일을 삭제해주어야 함.
 
-    if os.path.isfile(mustBeRemovedFile):
-        os.remove(mustBeRemovedFile)
+    for f in glob(mustBeRemovedFile) :
+        os.remove(f)
 
     fd = faceDetect("./image")
 
