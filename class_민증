@@ -97,7 +97,8 @@ class CheckCard:
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800) # 가로
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 800) # 세로
         self.setBirth(path,cap)
-        self.takePicture(cap,"./img/")
+        img = self.takePicture(cap,"./img/")
         cap.release()
         cv2.destroyAllWindows()
+        return img
         
