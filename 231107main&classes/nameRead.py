@@ -77,7 +77,7 @@ class nameRead:
                 agent_name = self.checkName(img,path)
                 if(len(agent_name)==3):
                     return_value, image = cap.read()
-                    cv2.imwrite("card.png", image)
+                    cv2.imwrite("./database/card.png", image)
                     name_List.append(agent_name)
                     
                 #같은 이름을 3번 발견하면 이를 정답으로 간주
@@ -91,8 +91,3 @@ class nameRead:
                 break       
             if(bool_Name and bool_Birth):
                 break 
-
-
-
-
-
