@@ -5,6 +5,8 @@ import cv2
 import numpy as np
 from PIL import Image
 import pandas as pd
+import os
+from glob import glob
 
 
 class faceDetect:
@@ -31,6 +33,10 @@ class faceDetect:
                 img1 = cv2.imread(img1)
 
             if img2 == None:
+                mustBeRemovedFile = self.database+"*.pkl"
+                for f in glob(mustBeRemovedFile):
+                    os.remove(f)
+                
                 dfs=pd.DataFrame()
                 dfs = DeepFace.find(img_path=img1,
                                     db_path=self.database, model_name=self.models[2])
