@@ -47,6 +47,9 @@ class nameRead:
         bool_Name = False
         birth_List = []
         name_List = []
+
+        database_path = "./database"
+
         while True:
             ret, frame = cap.read()
             #가로,세로
@@ -77,7 +80,7 @@ class nameRead:
                 agent_name = self.checkName(img,path)
                 if(len(agent_name)==3):
                     return_value, image = cap.read()
-                    cv2.imwrite("./database/card.png", image)
+                    cv2.imwrite(database_path + "card.png", image)
                     name_List.append(agent_name)
                     
                 #같은 이름을 3번 발견하면 이를 정답으로 간주
@@ -90,4 +93,4 @@ class nameRead:
             if cv2.waitKey(1) == ord('q'):
                 break       
             if(bool_Name and bool_Birth):
-                break 
+                break
