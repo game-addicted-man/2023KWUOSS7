@@ -87,12 +87,10 @@ class CheckCard:
     def takePicture(self,cap,savePath):
         ret,image = cap.read()
         cropped_img = image[90:310, 420:600]
-        cv2.imwrite(savePath+"face.jpg",cropped_img)
         improve1 = cv2.detailEnhance(cropped_img, sigma_s=10, sigma_r=0.15)
-        cv2.imwrite(savePath+"improved_face.jpg", improve1)
         kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]) 
-        improve3 = cv2.filter2D(cropped_img, -1, kernel) 
-        cv2.imwrite(savePath+'sharpened_face.jpg', improve3) 
+        improve3 = cv2.filter2D(cropped_img, -1, kernel)
+        return improve3
     
     def run(self,path):
         cap = cv2.VideoCapture(0)
