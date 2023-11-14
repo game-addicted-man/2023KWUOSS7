@@ -34,7 +34,7 @@ class faceDetect:
                 dfs = DeepFace.find(img_path=img1,
                                     db_path=self.database, model_name=self.models[2])
                 print(dfs)
-                if dfs.empty():
+                if dfs[0].empty:
                     return False
 
                 return True
@@ -45,8 +45,8 @@ class faceDetect:
             result = DeepFace.verify(img1_path=img1, img2_path=img2, model_name=self.models[6])
 
             if result["verified"]:
-                cv2.imwrite(self.database + "/" + name + "_pic" + ".jpg", img1)
-                cv2.imwrite(self.database + "/" + name + "_ifm" + ".jpg", img2)
+                cv2.imwrite(self.database + "/" + name + "_pic" + ".png", img1)
+                cv2.imwrite(self.database + "/" + name + "_ifm" + ".png", img2)
                 return True
 
             return False
@@ -126,4 +126,3 @@ class faceDetect:
         camera.release()
         cv2.destroyAllWindows()
         return captured
-
