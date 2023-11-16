@@ -24,7 +24,7 @@ class CheckCard:
 
         #임의의값 아래는 처리 안함,높으면 255로 고정
         img3 = cv2.adaptiveThreshold(img2, 255.0, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 19,9)
-        result = img3[150:210,50:330]
+        result = img3[150:210,40:180]
         text = pytesseract.image_to_string(result)
         num = re.sub(r'[^0-9]','',text)
         return num    
@@ -68,9 +68,9 @@ class CheckCard:
             img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if(not bool_Birth):
                 agent_num = self.checkNum(img,path,w,h)
-                if(len(agent_num)==13):
-                    birth_List.append(agent_num[:6])
-                    #print(agent_num[:6]) 숫자 확인용
+                if(len(agent_num)==6):
+                    birth_List.append(agent_num)
+                    #print(agent_num) 숫자 확인용
                 for i in birth_List:
                     if(birth_List.count(i)>=3):
                         self.birth = i
