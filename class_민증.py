@@ -127,7 +127,6 @@ class CheckCard:
         h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         self.setBirth(path,cap)
         img = self.takePicture(cap,w,h)
-        print(a)
         cap.release()
         cv2.destroyAllWindows()
         return img
