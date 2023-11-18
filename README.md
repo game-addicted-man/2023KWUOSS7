@@ -49,9 +49,10 @@
 pip install numpy
 pip install cv2
 pip install matplotlib
-pip install pillow
 pip install pytesseract
+pip install re
 pip install deepface
+pip install pillow
 ```
 전부 설치 이후, 파일 실행
 ```
