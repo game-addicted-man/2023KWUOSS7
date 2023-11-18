@@ -50,7 +50,6 @@ pip install numpy
 pip install cv2
 pip install matplotlib
 pip install pytesseract
-pip install re
 pip install deepface
 pip install pillow
 ```
