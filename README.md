@@ -47,7 +47,7 @@
 라이브러리 설치 :
 ```
 pip install numpy
-pip install cv2
+pip install opencv-python
 pip install matplotlib
 pip install pytesseract
 pip install deepface
