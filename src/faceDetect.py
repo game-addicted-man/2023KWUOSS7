@@ -10,7 +10,13 @@ from glob import glob
 
 # haarcascade_frontalface_default.xml 얼굴인식 데이터셋 파일 사용에 따른 Intel License 의 copyright notice 의 게시.
 """
- Intel License Agreement
+  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
+
+  By downloading, copying, installing or using the software you agree to this license.
+  If you do not agree to this license, do not download, install,
+  copy or use the software.
+  
+                        Intel License Agreement
                 For Open Source Computer Vision Library
 
  Copyright (C) 2000, Intel Corporation, all rights reserved.
