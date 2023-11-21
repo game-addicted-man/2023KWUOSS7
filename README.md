@@ -105,5 +105,5 @@ python3
 * BSD License (Matplotlib, NumPy)
 * Apache License 2.0 (tesseract, Opencv)
 * HPND License (Pillow)
-* MIT License(deepface)
-* Intel License(haarcascade_frontalface_default.xml 얼굴인식 데이터셋 파일 사용)
+* MIT License (deepface)
+* Intel License (haarcascade_frontalface_default.xml 얼굴인식 데이터셋 파일 사용)
