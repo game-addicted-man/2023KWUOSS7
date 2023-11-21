@@ -289,36 +289,54 @@ class faceDetect:
                        "Dlib",
                        "SFace", ]
 
+        try:
+            if not os.path.exists(db):
+                os.makedirs(db)
+        except OSError:
+            print("디렉토리 생성 오류. "+db)
+
+
         self.database = db
 
     def match_face(self, img1, img2=[], name=None):
-        # precondition : img1에는 현재 사진데이터(or 경로), img2에는 민증사진데이터(or 경로), name에는 이름을 할당
+        # precondition : img1에는 현재 사진 데이터(or 경로), img2에는 민증사진 데이터(or 경로), name에는 이름을 할당
         #                민증 사진을 주기 전에 생년월일로 성인인지 판별 후 성인일때만 함수 이용해야 한다.
         # postcondition: 민증 사진 없이 현재 사진만 입력하면 데이터베이스에 있는 사진들과 비교,
-        #                두개 사진 모두 입력하면 2개의 사진 비교 일치하면 true 반환
+        #                두개 사진 모두 입력하면 2개의 사진 비교 일치하면 데이터베이스에 저장후 true 반환.
         try:
+            # img1 이미지 하나만 할당 했을 경우
             if isinstance(img1, str):
+                # 경로 입력시 해당 경로 이미지 데이터 가져오기
                 img1 = cv2.imread(img1)
 
             if len(img2)==0:
+                # 사진 하나만 인자로 함수를 실행했을때
+                # DeepFace.find() 함수 실행시 생기는 .pkl 파일 삭제
                 mustBeRemovedFile = self.database+"*.pkl"
                 for f in glob(mustBeRemovedFile):
                     os.remove(f)
 
+                # 데이터베이스에서 입력 받은 사진과 일치하는 얼굴이 있는지 판독하기
                 dfs=pd.DataFrame()
                 dfs = DeepFace.find(img_path=img1,
                                     db_path=self.database, model_name=self.models[2])[0]
+                # 일치하는 얼굴이 있을시 데이터베이스에 어떤 사진 데이터가 일치하는지 출력 후 true or false 반환
                 print(dfs)
                 if dfs.empty:
                     return False
 
                 return True
 
+            # 사진 데이터 2개를 인자로 받아 함수를 실행 시켰을 때
             if isinstance(img2, str):
+                # 경로 입력시 해당 경로 이미지 데이터 가져오기
                 img2 = cv2.imread(img2)
 
+            # 입력 받은 2개의 사진에서 얼굴 비교하기
             result = DeepFace.verify(img1_path=img1, img2_path=img2, model_name=self.models[6])
+
             if result["verified"]:
+                # 얼굴이 일치하면 데이터베이스에 저장
                 cv2.imwrite(self.database + "/" + name + "_pic" + ".jpg", img1)
                 cv2.imwrite(self.database + "/" + name + "_ifm" + ".jpg", img2)
                 return True
@@ -347,7 +365,6 @@ class faceDetect:
             print(v)
 
     def current_face(self):
-        # 주환이형이 여기서 얼굴인식하고 인식했으면 그 값을 리턴해주세요
 
         # precondition : "captured.png" 사진 파일이 있어도 되고 없어도 된다. 이 기능의 목적은 사용자의 사진 촬영에 한한다.
         # postcondition: 3초 간의 얼굴 인식 후 촬영되면 "captured.png" 사진 파일이 생성 또는 갱신됨. (현재, 리턴 값은 없음)
