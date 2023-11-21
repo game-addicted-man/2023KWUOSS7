@@ -36,7 +36,7 @@ pip install pillow
 ```
 https://github.com/UB-Mannheim/tesseract/wiki
 ```  
-macOS 환경에서는 터미널에서 설치가 가능하고, 역시 경로를 외워놓아야 한다.
+macOS 환경에서는 터미널에서 설치가 가능하고, 역시 경로를 외워놓아야 한다. 밑의 사용 방법에서 쓰인다.
 
 위 모듈들을 설치한 후, 아래 사진과 같이 저장소의 홈 화면에서 초록색 code 버튼을 누른 후, Download ZIP을 누른다.    
 
